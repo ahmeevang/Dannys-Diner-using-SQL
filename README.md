@@ -8,6 +8,8 @@ There are three datasets:
 * menu (dd_menu)
 * members (dd_members)
 
+Full SQL [syntax](https://github.com/ahmeevang/SQL-Dannys-Dinner/blob/main/queries.sql) solving the Danny's Diner case study from the #8WeekSQLChallenge!
+
 ## Business questions:
 ### 1. What is the total amount each customer spent at the restaurant?
 ```sql
@@ -215,5 +217,3 @@ LEFT JOIN dd_menu m
 LEFT JOIN dd_members m2
     ON s.customer_id = m2.customer_id
 ```
-
-### Full SQL [syntax](https://github.com/ahmeevang/SQL-Dannys-Dinner/blob/main/queries.sql) solving the Danny's Diner case study from the #8WeekSQLChallenge!
