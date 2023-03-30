@@ -1,6 +1,6 @@
 # Danny's Diner
 
-### Overview
+## Overview
 Danny is in need of assistance to help keep his diner afloat. He wants to use the data he's gathered to answer questions about his customers so he can deliver a better and more personalized experience for them.
 
 There are three datasets:
@@ -8,8 +8,8 @@ There are three datasets:
 * menu (dd_menu)
 * members (dd_members)
 
-### Business questions:
-1. What is the total amount each customer spent at the restaurant?
+## Business questions:
+### 1. What is the total amount each customer spent at the restaurant?
 ```sql
 SELECT customer_id, SUM(price) AS total_spent
 FROM dd_sales
@@ -22,7 +22,7 @@ Answer:
 * customer B spent $74
 * customer C spent $36
 
-2. How many days has each customer visited the restaurant?
+### 2. How many days has each customer visited the restaurant?
 ```sql
 SELECT customer_id, COUNT(DISTINCT(order_date)) AS days_visited
 FROM dd_sales
@@ -33,7 +33,7 @@ Answer:
 * customer B visited 6 times
 * customer C visited 2 times
 
-3. What was the first item from the menu purchased by each customer?
+### 3. What was the first item from the menu purchased by each customer?
 ```sql
 WITH ordered_sales_CTE AS
 (
@@ -56,7 +56,7 @@ Answer:
 * customer B's first order was curry
 * customer C's first order was ramen
 
-4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 ```sql
 SELECT COUNT(s.product_id) AS most_purchased, product_name
 FROM dd_sales s
@@ -68,7 +68,7 @@ ORDER BY most_purchased DESC
 Answer:
 * The most purchased item on the menu is ramen (8 times)
 
-5. Which item was the most popular for each customer?
+### 5. Which item was the most popular for each customer?
 ```sql
 WITH favorite_item_CTE AS
 (
@@ -90,7 +90,7 @@ Answer:
 * customer B's favorite item is sushi, curry and ramen
 * customer C's favorite item is ramen
 
-6. Which item was purchased first by the customer after they became a member?
+### 6. Which item was purchased first by the customer after they became a member?
 ```sql
 WITH member_sales_CTE AS
 (
@@ -113,7 +113,7 @@ Answer:
 * customer A's first order as a member was curry
 * customer B's first order as a member was sushi
 
-7. Which item was purchased just before the customer became a member?
+### 7. Which item was purchased just before the customer became a member?
 ```sql
 WITH before_member_CTE AS
 (
@@ -136,7 +136,7 @@ Answer:
 * customer A's last order before becoming a member was sushi and curry
 * customer B's last order before becoming a memer was sushi
 
-8. What is the total items and amount spent for each member before they became a member?
+### 8. What is the total items and amount spent for each member before they became a member?
 ```sql
 SELECT s.customer_id, COUNT(DISTINCT(s.product_id)) AS menu_item, SUM(m2.price) AS total_sales
 FROM dd_sales s
@@ -151,7 +151,7 @@ Answer:
 * customer A bought 2 items for $25 before becoming a member
 * customer B bought 2 items for $40 before becoming a member
 
-9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+### 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 ```sql
 WITH price_point_CTE AS
 (
@@ -173,7 +173,7 @@ Answer:
 * customer B would have 940 points
 * customer C would have 360 points
 
-10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+### 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 ```sql
 WITH dates_CTE AS
 (
@@ -202,7 +202,7 @@ Answer:
 * customer A has 1,370 points at the end of January
 * customer B has 820 points at the end of January
 
-BONUS: Combine the three datasets to show customer_id, order_date, product_name, price and member (Y/N).
+### BONUS: Combine the three datasets to show customer_id, order_date, product_name, price and member (Y/N).
 ```sql
 SELECT customer_id, order_date, product_name, price,
     CASE WHEN join_date > order_date THEN 'N'
@@ -216,4 +216,4 @@ LEFT JOIN dd_members m2
     ON s.customer_id = m2.customer_id
 ```
 
-#### Full SQL [syntax](https://github.com/ahmeevang/SQL-Dannys-Dinner/blob/main/queries.sql) solving the Danny's Diner case study from the #8WeekSQLChallenge!
+### Full SQL [syntax](https://github.com/ahmeevang/SQL-Dannys-Dinner/blob/main/queries.sql) solving the Danny's Diner case study from the #8WeekSQLChallenge!
