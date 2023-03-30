@@ -4,25 +4,34 @@
 Danny is in need of assistance to help keep his diner afloat. He wants to use the data he's gathered to answer questions about his customers so he can deliver a better and more personalized experience for them.
 
 There are three datasets:
-* sales
-* menu
-* members
+* sales (dd_sales)
+* menu (dd_menu)
+* members (dd_members)
 
 ### Business questions:
 1. What is the total amount each customer spent at the restaurant?
 ```sql
-SELECT customer_id, SUM(price)
+SELECT customer_id, SUM(price) AS total_spent
 FROM dd_sales
 JOIN dd_menu
     ON dd_sales.product_id = dd_menu.product_id
 GROUP BY customer_id
 ```
+Answer:
+* customer A spent $76
+* customer B spent $74
+* customer C spent $36
 
 2. How many days has each customer visited the restaurant?
-```SELECT customer_id, COUNT(DISTINCT(order_date)) AS days_visited
+```sql
+SELECT customer_id, COUNT(DISTINCT(order_date)) AS days_visited
 FROM dd_sales
 GROUP BY customer_id
 ```
+Answer:
+* customer A visited 4 times
+* customer B visited 6 times
+* customer C visited 2 times
 
 3. What was the first item from the menu purchased by each customer?
 ```sql
@@ -42,6 +51,10 @@ FROM ordered_sales_CTE
 WHERE rank = 1
 GROUP BY customer_id, product_name
 ```
+Answer:
+* customer A's first order was sushi
+* customer B's first order was curry
+* customer C's first order was ramen
 
 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 ```sql
@@ -52,6 +65,8 @@ JOIN dd_menu m
 GROUP BY s.product_id, product_name
 ORDER BY most_purchased DESC
 ```
+Answer:
+* The most purchased item on the menu is ramen (8 times)
 
 5. Which item was the most popular for each customer?
 ```sql
@@ -70,6 +85,10 @@ SELECT customer_id, product_name, order_count
 FROM favorite_item_CTE
 WHERE rank = 1
 ```
+Answer:
+* customer A's favorite item is ramen
+* customer B's favorite item is sushi, curry and ramen
+* customer C's favorite item is ramen
 
 6. Which item was purchased first by the customer after they became a member?
 ```sql
@@ -90,6 +109,9 @@ JOIN dd_menu
     ON member_sales_CTE.product_id = dd_menu.product_id
 WHERE rank = 1
 ```
+Answer:
+* customer A's first order as a member was curry
+* customer B's first order as a member was sushi
 
 7. Which item was purchased just before the customer became a member?
 ```sql
@@ -110,6 +132,10 @@ JOIN dd_menu
     ON before_member_CTE.product_id = dd_menu.product_id
 WHERE rank = 1
 ```
+Answer:
+* customer A's last order before becoming a member was sushi and curry
+* customer B's last order before becoming a memer was sushi
+
 8. What is the total items and amount spent for each member before they became a member?
 ```sql
 SELECT s.customer_id, COUNT(DISTINCT(s.product_id)) AS menu_item, SUM(m2.price) AS total_sales
@@ -121,6 +147,9 @@ JOIN dd_menu m2
 WHERE s.order_date < m.join_date
 GROUP BY s.customer_id
 ```
+Answer:
+* customer A bought 2 items for $25 before becoming a member
+* customer B bought 2 items for $40 before becoming a member
 
 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 ```sql
@@ -139,6 +168,10 @@ JOIN dd_sales s
     ON p.product_id = s.product_id
 GROUP BY s.customer_id
 ```
+Answer:
+* customer A would have 860 points
+* customer B would have 940 points
+* customer C would have 360 points
 
 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 ```sql
@@ -165,6 +198,9 @@ JOIN dd_menu m
 WHERE s.order_date < dates_CTE.last_day
 GROUP BY dates_CTE.customer_id
 ```
+Answer:
+* customer A has 1,370 points at the end of January
+* customer B has 820 points at the end of January
 
 BONUS: Combine the three datasets to show customer_id, order_date, product_name, price and member (Y/N).
 ```sql
