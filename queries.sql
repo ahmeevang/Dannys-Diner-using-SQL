@@ -4,7 +4,7 @@
 
 --Total amount each customer spent at the restaurant
 
-SELECT customer_id, SUM(price)
+SELECT customer_id, SUM(price) AS total_spent
 FROM dd_sales
 JOIN dd_menu
     ON dd_sales.product_id = dd_menu.product_id
