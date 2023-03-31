@@ -1,4 +1,4 @@
-# Danny's Diner
+# Danny's Diner Case Study
 
 ## Overview
 Danny is in need of assistance to help keep his diner afloat. He wants to use the data he's gathered to answer questions about his customers so he can deliver a better and more personalized experience for them.
